@@ -1,0 +1,92 @@
+| Félévközi számonkérés          | Jegy                |
+|--------------------------------+---------------------|
+| ±: 0-2p                        | félévközi zh    10p |
+|    2 kérdés                    | beugró (≥ 11p)  20p |
+|    Σ 24p                       | programozás     30p |
+|    legalább 12 pontot kell     | Σ               60p |
+|      elérni                    |                     |
+|    nem pótolható               |                     |
+|--------------------------------+---------------------|
+| Házik                          | Ponthatárok         |
+|   hetente                      |   60 -- 50p  5      |
+|   mindet meg kell oldani       |   49 -- 43p  4      |
+|                                |   42 -- 36p  3      |
+|                                |   35 -- 30p  2      |
+|                                |   29 --  0p  1      |
+|                                |                     |
+|--------------------------------+---------------------|
+| Félévközi zh                   |                     |
+|   10p = 4 * 1p + 3 * 2p        |                     |
+|--------------------------------+---------------------|
+| Hiányzás                       |                     |
+|   0--3 megengedett             |                     |
+|   4    extra feladattal        |                     |
+|   5+   nem szerezhet jegyet    |                     |
+
+A beugró kiváltható félév közben ± pontokkal, lásd lentebb a vizsgánál.
+
+
+## Hosszabban
+
+két elméleti kérdés, kérdésenként helyes válasz 1 pont, helytelen 0 pont
+  minimum 12 pont
+  maximum 24 pont
+  pótolni nem lehet
+
+beadandók
+  hetente
+  100% teljesítés szükséges
+  pótlási lehetőség az utolsó szorgalmi héten, de mindenképpen az első vizsga
+    előtt
+
+Gyakorlatokon maximum 3 alkalmommal lehet hiányozni következmények
+nélkül. Negyedik hiányzásnál plusz feladat adható ki. Előadáson maximum
+4 alkalommal lehet hiányozni.
+
+### Félévközi zh
+
+Minden csoport a gyakorlat idején kívül írja meg. Kb 45-60 perces.
+Javítani, pótolni lehet. Nincs minimum ponthatár, de a félév végi jegybe
+beleszámít.
+
+Időpont még nincs, valamikor őszi szünet környékén írják meg a
+csoportok a zh-t.
+
+### Vizsga
+
+Két részből áll: beugróból és programozásból.
+
+A beugró 20 kérdéses, max 20 pontot lehet elérni. Minimum 11 pont kell a
+vizsga folytatásához.
+
+A beugró kiváltható a féléves ± pontokkal.
+
+  beugrón elért pont = ± pont - 4
+
+A sikeres beugróhoz tehát 15 pontot kell összeszedni ±-okból. Ez alatt
+a beugrót meg kell írni, a ± pontok nem számítanak. 15 ± ponttól
+megírható a beugró, a jobb pont számít.
+
+A beugróra 35-40 percet adunk, a programozásra 2 órát.-m,
+
+qils07@inf.elte.hu
+tárgyba: [FP] ______
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
