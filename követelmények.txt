@@ -36,8 +36,6 @@ két elméleti kérdés, kérdésenként helyes válasz 1 pont, helytelen 0 pont
 beadandók
   hetente
   100% teljesítés szükséges
-  pótlási lehetőség az utolsó szorgalmi héten, de mindenképpen az első vizsga
-    előtt
 
 Gyakorlatokon maximum 3 alkalmommal lehet hiányozni következmények
 nélkül. Negyedik hiányzásnál plusz feladat adható ki. Előadáson maximum
@@ -67,7 +65,7 @@ A sikeres beugróhoz tehát 15 pontot kell összeszedni ±-okból. Ez alatt
 a beugrót meg kell írni, a ± pontok nem számítanak. 15 ± ponttól
 megírható a beugró, a jobb pont számít.
 
-A beugróra 35-40 percet adunk, a programozásra 2 órát.-m,
+A beugróra 35-40 percet adunk, a programozásra 2 órát.
 
 qils07@inf.elte.hu
 tárgyba: [FP] ______

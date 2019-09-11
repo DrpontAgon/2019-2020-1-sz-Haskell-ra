@@ -29,7 +29,11 @@ Fájlban konstansok definiálása. Fájl betöltése.
 
 GHC-vel és GHCi-vel való megismerkedés:
 GHC letöltése: https://www.haskell.org/platform/
-:l, :r, :t, :i
+:l <fájlnév (akár több is)> -> Fájl(ok) betöltése a ghci-be
+:r -> Betöltött fájlok újratöltése
+:t <kifejezés> -> kifejezés típusának lekérdezése
+:i <kifejezés> -> kifejezés minden információjának lekérdezése
+
 :!<cmd>, ahol a cmd az aktuális platformon a beépített command-okat tudja futtatni.
 Játék a :set prompt-tal
 
