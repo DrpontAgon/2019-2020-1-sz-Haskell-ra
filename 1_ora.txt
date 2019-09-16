@@ -1,0 +1,47 @@
+1. óra
+
+Elérhetőségem:
+qils07@inf.elte.hu
+Tárgyba: [FP] <tárgy>
+
+Tárgy honlapja:
+lambda.inf.elte.hu
+
+Házik helye:
+bead.inf.elte.hu
+
+Ajánlott IDE-k:
+Visual Studio Code: megfelelő kiegészítőkkel egyszerű a használata
+Notepad++: megfelelő a támogatása, automatikus kiegészítő esetleg zavaró lehet
+Geany: linux alatt kényelmes, windows alatt van jobb, ld. fentebb.
+Emacs: Csak a nagyon vájtfülűeknek, nagyon advanced, a teljes megismeréséhez és kényelmes használatához minimum hónapok szükségesek.
+
+Funkcionális programozás -> haskell nyelvben
++,-,*,/,div,mod (játék a felüldefiniálásokkal)
+^,^^,**
+Int, Integer, Bool, Float, Double, Char, String == [Char] típusok; típus szignatúra
+Int és Integer közti különbség.
+Konstans függvények definiálása.
+Egy paraméteres függvények definiálása.
+Egyszerű lista függvények.
+Fájlban konstansok definiálása. Fájl betöltése.
+(Nagyon röviden érintve: rekurzió, amiről később még lesz szó)
+
+GHC-vel és GHCi-vel való megismerkedés:
+GHC letöltése: https://www.haskell.org/platform/
+:l <fájlnév (akár több is)> -> Fájl(ok) betöltése a ghci-be
+:r -> Betöltött fájlok újratöltése
+:t <kifejezés> -> kifejezés típusának lekérdezése
+:i <kifejezés> -> kifejezés minden információjának lekérdezése
+
+:!<cmd>, ahol a cmd az aktuális platformon a beépített command-okat tudja futtatni.
+Játék a :set prompt-tal
+
+Ajánlott irodalom:
+(Ezekhez angol nyelv tudás szükséges, magyarul sajnos nem rendelkezésre sok minden.)
+
+http://learnyouahaskell.com/introduction#about-this-tutorial
+Ez kb. lefedi a félév teljes anyagát (és még többet is, de minden elmagyarázva mindenki számára egy barátságos és érthető módon).
+
+http://book.realworldhaskell.org/
+Nagyon tömény, de leír mindent, viszont nem feltétlen az elsőre legérthetőbb módon; a nagyon érdeklődőknek ajánlott.

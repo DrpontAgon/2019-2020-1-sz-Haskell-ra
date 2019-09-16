@@ -1,0 +1,18 @@
+2. óra
+
+Szám átalakító függvények: fromIntegral, realToFrac
+Kerekítő függvények: round, truncate, floor, ceiling
+Típuskikövetkeztetés bevezető (az 1 * 5-ös példán)
+Típus megkötés a (::)-tal
+Felsorolható típusok (Enum osztály): Char, Int, Integer (a megfeleltés viszont nem bijektív), Double, Float
+Lista és egyszerűbb függvényeik: (:), head, tail, last, init, (!!), length, take, drop
+Lista .. kifejezések:
+ -- [1..] : 1-től végtelenig az egész számok
+ -- [1..10] : 1-től 10-ig az egész számok
+ -- ['a'..'z'] : a-tól z-ig a betűk
+ -- [2,4..13] : 2-től 13-ig 2-es lépésközzel az egész számok (13 nem lesz benne, mert 2 lépésekkel nem érünk a 13-hoz közvetlen)
+ -- [1,4..] : 1-től 3-asával végtelenig az egész számok
+Rendezett n-esek: (,), (,,), (,,,) ...
+
+Lista: homogén, csak azonos típusú elemek szerepelhetnek benne.
+Rendezett n-esek: nem homogén, több különböző típus is szerepelhet benne.
