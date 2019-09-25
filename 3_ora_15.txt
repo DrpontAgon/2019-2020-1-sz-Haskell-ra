@@ -1,0 +1,29 @@
+3. óra
+Halmazkifejezések, azaz listagenerátorok:
+[f i_1 i_2 ... i_n | i_1 <- l_1, i_2 <- l_2, ... , i_n <- l_n, feltétel1, feltétel2,feltétel3,...,feltétel_n]
+
+Ha több listát sorolunk fel (azaz n > 1), akkor a generátor mindent mindennel össze fog párosítani balról jobbra.
+Tehát pl.
+[(i,j) | i <- [0..2], j <- [1..4]] == [(0,1),(0,2),(0,3),(0,4),(1,1),(1,2),(1,3),(1,4),(2,1),(2,2),(2,3),(2,4)]
+Ezzel szemben:
+[(i,j) | i <- [1..4], j <- [0..2]] == [(1,0),(1,1),(1,2),(2,0),(2,1),(2,2),(3,0),(3,1),(3,2),(4,0),(4,1),(4,2)]
+
+A vesszővel elválasztott feltételek && (és) kapcsolatot jelölnek, tehát minden feltételnek teljesülnie kell ahhoz, hogy egy elem az eredménylistában benne legyen.
+
+null :: [a] -> Bool: ellenőrzi, hogy a lista üres-e.
+Üresség ellenőrzés: jobb a null függvény, mint az (== []), mert az (==) egyenlőségvizsgálatot feltételez, míg a null függvény általánosan bármelyik típusra működik.
+
+elem :: Eq a => a -> [a] -> Bool: Megnézi, hogy az első paraméterül kapott elem benne van-e a második paraméterül kapott listában. Végtelen listára is működik mindaddig, amíg az elem benne van a listában, ellenkező esetben a végtelenségig fut.
+
+concat :: [[a]] -> [a]: Összefűzi a listában tartalmazott elemeket.
+replicate :: Int -> a -> [a]: Megadott paraméter számú adott elemet ad vissza listában.
+
+Mohó és lusta kiértékelés:
+Mohó: Minden esetben kiértékel.
+Lusta: Csak akkor értékel ki, ha muszáj.
+
+f x = 'a'
+f (error "Ez nem értékelődik ki soha.") == 'a' és nem lesz exception (kivétel), amitől elszállna a program.
+(Megj.: A honlapon a (hónap,nap)-os feladattal folytatjuk.)
+
+Modulok importálása az import kulcsszóval történik mindig a fájl legelején. A modulok könyvtárakban találhatóak.
