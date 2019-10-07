@@ -1,0 +1,9 @@
+Mintaillesztés folytatása.
+Új függvény: toUpper: kisbetű -> nagybetű; ennek vagy párja is, toLower: nagybetű -> kisbetű, mindkettő a Data.Char-ban található.
+
+Lista minták: Előző jegyzetben részletesen ott vannak mindenféle módon.
+
+Mintaillesztéses rekurzió "everyFifth" függvényben.
+
+Megj.: ezért mondja a zip függvényt segítségnek.
+everyFifth l = [ j | (i,j) <- zip [0..] l, i `mod` 5 == 0 ]
