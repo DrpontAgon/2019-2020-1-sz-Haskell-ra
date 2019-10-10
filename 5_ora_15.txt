@@ -1,0 +1,25 @@
+Mintaillesztés:
+A függvény paramétereinek a helyére konkrét érték írása (egészen pontosan konstruktorok írhatók oda, de az majd csak a rekurzió után kerül szóba).
+
+f x <= bármilyen minta illeszkedik rá, használt paraméter mintája.
+f _ <= nem használt bármilyen paraméter mintája, joker.
+f (x,y) <= rendezett pár mintája, fel lett bontva a két komponensére.
+f (x,(y,z)) <= rendezett pár, aminek a második eleme szintén egy rendezett pár.
+f (x,y,z) <= rendezett 3-as mintája.
+f [] <= üres lista mintája
+f [x] <= pontosan egy elemű lista mintája.
+f [x,y] <= pontosan két elemű lista mintája.
+f (x:xs) <= legalább 1 elemű lista mintája. (ahol x a fejelem, xs pedig a maradék)
+f (x:y:xs) <= legalább 2 elemű lista mintája.
+f ((x,y):xs) <= legalább 1 elemű rendezett párokból álló lista mintája.
+f True, f False, f 1, f 'c', f (-1) <= konkrét értékek, mint minták.
+Mágikus okok miatt az f (-1)-et is elfogadja mint minta, hiába nincsenek negatív literálok.
+
+A listagenerátorban a '|' jobb oldalán a "változó" létrehozásakor is mintaillesztés történik.
+
+Parciális és totális függvények:
+
+Parciális: A függvény értelmezési tartománya részhalmaza a típus értelmezési tartományának.
+pl. head, last, init, tail, mert mindegyik az üres listára nem értelmezett.
+
+Totális: A függvénynek és a típusának értelmezési tartománya megegyezik.
