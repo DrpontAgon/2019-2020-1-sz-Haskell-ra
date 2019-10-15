@@ -1,0 +1,3 @@
+Rekurzív függvény: önmaga definícióját felhasználó függvény
+
+Rekurzióval definiált függvények: sum, product, (++), concat, last, init, minimum
