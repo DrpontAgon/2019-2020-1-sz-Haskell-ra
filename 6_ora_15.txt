@@ -1,0 +1,10 @@
+Mintaillesztés befejezése
+Általános ötletek: egy elemre megcsinálni valamit -> egy listányi elemre ugyanazt megcsinálni; f x (1 elem) <-> [f x | x <- lista] (több elem)
+
+Rekurzív függvény: önmaga definícióját felhasználó függvény
+
+Rekurzió tényleges elkezdése: sum függvény
+sum [] = 0
+sum (x:xs) = x + sum xs
+
+pl. sum [5,9,1,2] == 5 + sum [9,1,2] == 5 + 9 + sum [1,2] == 5 + 9 + 1 + sum [2] == 5 + 9 + 1 + 2 + sum [] = 5 + 9 + 1 + 2 + 0 == 17
