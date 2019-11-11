@@ -14,6 +14,29 @@ all = (and .) . map
 
 (any analóg módon ugyanígy.)
 
+elem :: Eq a => a -> [a] -> Bool
+elem = any . (==)
+
+Levezetés, hogy ez miért lesz jó, meg egyáltalán típushelyes:
+
+:t any ==> (a -> Bool) -> [a] -> Bool
+:t (==) ==> Eq a => a -> a -> Bool
+:t (.) ==> (b -> c) -> (a -> b) -> a -> c
+
+A (.)-ba helyettesítsük be az egyes típusokat
+Első paraméter az any.
+(b -> c) -> (a -> b) -> a -> c ==> ((d -> Bool) -> ([d] -> Bool)) -> (a -> b) -> a -> c
+Ebből kiderül, hogy b == d -> Bool, c == [d] -> Bool
+Helyettesítsük be a megtudott értékeket.
+((d -> Bool) -> ([d] -> Bool)) -> (a -> (d -> Bool)) -> a -> ([d] -> Bool)
+Most helyettesítsük be az (==)-t:
+Eq d => ((d -> Bool) -> ([d] -> Bool)) -> (d -> d -> Bool) -> d -> [d] -> Bool
+Ebből kiderül, hogy a == d, az Eq-t ne felejtsük le, ami az (==)-n van.
+
+Az any megvan, az (==) megvan a defből, így az (any . (==)) típusa Eq d => d -> [d] -> Bool, ami pont az elem-nek a típusa.
+És pont azt fogja csinálni, amit elvárunk.
+Nyilván ugyanezt el lehet játszani az all-ra és az any-re is, hogy miért azok a defek, amik.
+_____________________________________________
 fib = 1:1:zipWith (+) fib (tail fib)  -- gyors, lineáris idejű kiértékelés
 
 fibből ennyit ismerünk : [1,1,.....]
