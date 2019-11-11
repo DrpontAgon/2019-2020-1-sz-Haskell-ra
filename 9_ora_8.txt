@@ -1,0 +1,28 @@
+Hasznos magasabb rendű függvények:
+ -- zipWith : zip általánosítva, egy paraméterül kapott függvény alapján zárja össze az elemeket.
+ -- iterate : [x, f x, f (f x), f (f (f x)).....] végtelen lista
+ -- ($) : Függvény applikáció paraméterre. Vagy zárójeleket lehet vele megspórolni -> olvashatóbb kód
+          vagy konkrétan használni esetleg több függvény applikálásra. pl. map ($ 4) [(`div` 2), (2 `div`), (2^)] == [2,0,16]
+ -- (.) : Függvénykompozíció, két függvény egymás utáni alkalmazása: (f o g)(x) = f(g(x)), pl. (*2).(+1) $ 3 == (3+1)*2 == 8; 
+ -- all, any : Összes elemre, illetve legalább egy elemre teljesül egy tulajdonság.
+
+all eredeti órai megoldása :
+all p = and . map p
+
+rövidebben:
+all = (and .) . map
+
+(any analóg módon ugyanígy.)
+
+fib = 1:1:zipWith (+) fib (tail fib)  -- gyors, lineáris idejű kiértékelés
+
+fibből ennyit ismerünk : [1,1,.....]
+lépésenként:
+zipWith (+) [1,1,......] [1,......] -- van két elem, amit össze tud adni.
+fib == [1,1,2,..........] -- de az első elem már megvolt
+zipWith (+) [1,2......] [2......] -- van megint két elem, amit össze lehet adni.
+fib == [1,1,2,3,.........] -- az első két elem már megvolt
+zipWith (+) [2,3......] [3......]
+fib == [1,1,2,3,5,........]
+stb.
+Ezek alapján felépül a végtelen Fibonacci-sorozat.

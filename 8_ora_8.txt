@@ -1,0 +1,5 @@
+Magasabb rendű függvény: Olyan függvény, amelynek vagy a paramétere függvény vagy a visszatérési értéke függvény.
+
+A magasabb rendű függvények a rekurzió elrejtésére szolgálnak általában.
+
+Egyszerű magasabb rendű függvények: map, filter, takeWhile, dropWhile

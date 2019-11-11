@@ -1,0 +1,7 @@
+Egyszerű rekurzív függvények: sum, last, init, (++), concat, minimum, maximum, zip, isPrefixOf, elem
+Mind egyre megy ki, egy elemre csinálunk valamit, majd rekurzív hívással megcsinálja a többit.
+
+Nehezebb rekurzív függvények: 
+ -- merge: nem csak egy, hanem két elemmel kell dolgozni, de ugyanúgy.
+ -- nub: a rekurzív hívásban a listát még szűrni kell.
+ -- polinom: ismerni kell a módszert hozzá
