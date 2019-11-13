@@ -1,0 +1,105 @@
+Esetszétválasztás == őrfeltétel (guard-ok):
+A feltételnek mindig bentebb kell kezdődnie, mint a függvény. Minden feltételnek egy vonalban kell lennie egymással.
+Formája:
+f x
+  | feltétel1 = valami_visszatérési_érték
+  | feltétel2 = másik_érték
+  | feltétel3 = harmadik_érték
+  ...
+  | otherwise = n_érték
+
+otherwise == True -- Tehát az otherwise is függvény, ami maga a True érték.
+A feltételek egyenként Bool típusú értékeknek kell lenniük.
+
+Az alábbi módon is elfogadja a haskell.
+f x | feltétel1 = valami_visszatérési_érték
+    | feltétel2 = másik_érték
+    | feltétel3 = harmadik_érték
+    ...
+    | otherwise = n_érték
+
+Lokális tér (lokális scope):
+
+A "where" kulcsszóval lehet lokális teret definiálni, amit csakis az az egy függvény lát, amelyikben van. Ez akkor lehet hasznos, ha valami bonyolultabb függvényhez
+egy segédfüggvényt írunk. A "where"-t ugyanúgy, mint az őrfeltételeket, bentebb kell húzni, majd az alatt definiált függvényeket a where-től még bentebb kell húzni.
+pl.
+
+everySquare :: Num a => [a] -> [a]
+everySquare []     = []
+everySquare (x:xs) = square x : everySquare xs
+  where
+    square x = x^2
+
+Az alábbi változatokat is elfogadja a haskell:
+
+everySquare :: Num a => [a] -> [a]
+everySquare []     = []
+everySquare (x:xs) = square x : everySquare xs where
+    square x = x^2
+
+everySquare :: Num a => [a] -> [a]
+everySquare []     = []
+everySquare (x:xs) = square x : everySquare xs where square x = x^2
+
+
+Fontos, hogy a where-ben lévő definíciókat nem látja a mindig a teljes függvény:
+pl. az alábbi kód hibás.
+f 0 = h 2 --< itt nem látja a "h" függvényt.
+f x = h x --< csak ebben az ágban látja a "h" függvényt.
+  where
+    h y = y + 1
+
+Minta zh megoldása:
+
+f :: [(Int,Int)] -> Int
+f ((x1,x2):(y1,y2):_) = x1+x2+y1+y2
+
+timeAdd :: (Int,Int) -> (Int,Int) -> (Int,Int)
+timeAdd (h1,m1) (h2,m2) = ((h1+h2+(m1+m2) `div` 60) `mod` 24,(m1+m2) `mod` 60)
+
+isSmile :: String -> Bool
+isSmile [x,y] = x `elem` ":;" && y `elem` ")}]"
+isSmile _     = False
+
+bimBam :: Int -> String
+bimBam x
+    | x `mod` 15 == 0 = "BimBam"
+    | x `mod` 3 == 0  = "Bim"
+    | x `mod` 5 == 0  = "Bam"
+    | otherwise       = ""
+
+minList :: [Int] -> [Int] -> [Int]
+minList (x:xs) (y:ys) = min x y : minList xs ys
+minList _      _      = []
+
+-- Megoldás másképp
+minList' xs ys = [min x y | (x,y) <- zip xs ys]
+
+wordNumWithCapital :: String -> Int
+wordNumWithCapital str = sum [1 | (x:_) <- words str, isUpper x]
+
+oneMatrix :: Int -> [[Int]]
+oneMatrix n = replicate n (replicate n 1)
+
+Órai további függvények:
+
+slice :: [Int] -> [a] -> [[a]]
+slice []     _    = []
+slice (n:ns) list = take n list : slice ns (drop n list)
+
+every :: Int -> [a] -> [a]
+every _ []         = []
+every n list@(x:_) = x : every n (drop n list)
+
+tails :: [a] -> [[a]]
+tails []          = [[]]
+tails list@(_:xs) = list : tails xs
+
+-- @ szerepe: a tőle jobbra lévő kifejezést elnevezzük a tőle balra található módon.
+-- fenti példában (_ : xs) teljes listát elneveztük "list"-nek.
+
+inits :: [a] -> [[a]]
+inits []     = [[]]
+inits (x:xs) = [] : [x : list | list <- inits xs]
+
+-- Ebben a példában a rekurzió már a listagenerátoron belül található.
