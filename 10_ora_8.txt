@@ -1,0 +1,2 @@
+foldr körbejárása
+Típusbehelyettesítés megemlítés szinten, parciális applikálás, (->) függvény zárójelezhetősége (jobbról köt, tehát a -> b -> c == a -> (b -> c) )

@@ -1,0 +1,43 @@
+Magasabb rendű függvények: map, filter, count, takeWhile, dropWhile, iterate, ($), (.), zipWith
+(->) a típusok között (tehát pl. map :: (a -> b) -> [a] -> [b]) is függvény, amely jobbról köt, 
+tehát a legjobboldalibb nyílra ki lehet rakni, illetve el lehet hagyni zárójelet. pl. map :: (a -> b) -> [a] -> [b] vagy map :: (a -> b) -> ([a] -> [b]) ugyanazok!
+
+takeWhile: addig veszi az elemeket a listából, amíg a feltétel igaz.
+dropWhile: addig dobja el az elemeket a listából, amíg a feltétel igaz.
+iterate: a végtelenségig alkalmazza a kapott függvényt a kapott paraméterre.
+($): alkalmazza a paraméterül kapott függvényt a kapott másik paraméterre. Ennek az egyik lényege, hogy zárójeleket lehet megspórolni a kódban.
+pl. head (drop 3 (head (take 2 ([[1,2,5,7,9,3],[5,4],[3,2],[2,3,4,5]])))) == head $ drop 3 $ head $ take 2 $ [[1,2,5,7,9,3],[5,4],[3,2],[2,3,4,5]] == 7
+(.): Matematikában használt függvénykompozíció: (f o g)(x) = f(g(x))
+Haskell-ben: (.) f g x = f $ g $ x
+A fenti kifejezés pl. így írható másképpen:
+head . drop 3 . head . take 2 $ [[1,2,5,7,9,3],[5,4],[3,2],[2,3,4,5]] == 7
+A $-tól balra egy darab nagy függvény található, nem sok kicsi!
+
+Lambda függvények:
+\ [back slash]-sel kezdődnek, névtelen, egyszer használatos függvények. \ után felsoroljuk a paramétereket (itt szintén lehet mintailleszteni), majd írunk egy -> nyilat,
+ennek a jobb oldalán adjuk meg, hogy mit csináljon a függvény.
+pl.
+f x = 3 * x + 2
+(\x -> 3 * x + 2)
+Ezen két függvény ugyanazt csinálja.
+
+(\(x:xs) -> x + 3) : ez a függvény csak és kizárólag az egy elemű listákra fog működni, üresre a mintaillesztés miatt nem.
+
+Parciális applikálás:
+Több paraméteres függvényeknek csak néhány paramétert adunk át, nem az összeset. Ez által új függvények jönnek létre.
+pl. (+3); ez az a függvény, amely egy számhoz hozzáad 3-at.
+Ezeknek ugyanúgy van típusuk.
+(+3) :: Num a => a -> a
+Ez pont ugyanazt jelenti, mint (\x -> x + 3)
+Ezt a (->) nyíl jobbra kötési tulajdonsága miatt lehet megtenni, de ugyan ezen ok miatt a függvényeknek szigorúan csak balról jobbra lehet odaadni így értékeket.
+Kivétel ez alól a két paraméteres függvények, amelyek infix módon is használhatók, így tetszőleges helyre lehet írni azok paramétereit a megfelelő módon.
+pl.
+(div 2) :: Integral a => a -> a    <=> (\x -> div 2 x) pl. (div 2) 8 == 0, mert a 2-t osztja a 8-cal
+(`div` 2) :: Integral a => a -> a  <=> (\x -> x `div` 2) pl. (`div` 2) 8 == 4, mert a 8-at osztja a 2-vel
+(2 `div`) :: Integral a => a -> a  <=> (\x -> 2 `div` x) pl. (2 `div`) 8 == 0, mert a 2-t osztja a 8-cal
+Erre érdemes odafigyelni, nem mindegy a sorrend és hogy infix-e!!
+
+További példák:
+takeWhile (== 5) : egy olyan függvény, amely vár egy listát és addig veszi belőle az elemeket, amíg 5-ös van az elején.
+iterate ('a':) : ez egy olyan függvény, amely folyamatosan a végtelenségig hozzáfűz egy 'a' karaktert a paraméterül kapott lista elejéhez.
+((+3).(*2)) : Függvény, amely vár egy számot, azt megszorozza 2-vel, majd hozzáad 3-at.

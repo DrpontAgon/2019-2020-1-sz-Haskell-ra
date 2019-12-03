@@ -1,0 +1,15 @@
+Nehezebb rekurzív függvények: Nem csak a végén lehet rekurzió, lehet listagenerátorban is, illetve gyakorlatilag bárhol: deletions, insertions
+
+Magasabb rendű függvények elkezdése: map, filter
+
+Magasabb rendű függvény: Olyan függvény, amelynek paramétere vagy visszatérési értéke függvény.
+
+map: A paraméterül kapott függvényt alkalmazza a paraméterül kapott lista össze elemére.
+Átírási szabály: 
+map f list = [f e | e <- list]
+Tehát ha listagenerátorban nincs feltétel, nem mintaillesztünk a nyíl bal oldalán és alkalmazunk egy függvényt az elemre, akkor azt át lehet írni mappá.
+
+filter: A paraméterül kapott tulajdonságot ellenőrzi, hogy mely listaelemekre igaz és azokat tartja meg a listában.
+Átírási szabály:
+filter p list [e | e <- list, p e]
+Tehát ha listagenerátorban nem mintaillesztünk a nyíl bal oldalán, nem alkalmazunk semmilyen függvényt az elemre, de van feltétel, akkor azt át lehet írni filterré.

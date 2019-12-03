@@ -1,0 +1,27 @@
+Paraméteres saját típus: nem kell minden egyes esetre külön-külön definiálni egy típust, hanem lehet az is nyugodtan polimorf.
+
+Értékkonstruktornak vagy simán konstruktornak nevezik azt a függvényt, amely segítségével az adott típusú értéket elő lehet állítani.
+pl. data Maybe a = Just a | Nothing
+data OneOrTwo a = Single a | Double a a
+
+A Just, Nothing, Single, Double mind konstruktorok.
+
+Típuskonstruktornak nevezik azt a függvényt, amely típust vár paraméterül, hogy annak a segítségével egy konkrét típust állítson elő.
+
+Az pl. nem valid, hogy: 
+Nothing :: Maybe, mert a Nothing értéket állít elő, a Maybe-nek viszont kell típus, hogy konkrét típus lehessen.
+
+Ha a Maybe megkapja a paraméterét, máris jó lesz:
+Nothing :: Maybe a
+mert a (Maybe a) már egy konkrét típus, aminek vannak értékei.
+
+Rekurzív adatstruktúra (érintőlegesen, vizsgában nem kell):
+A lista egy rekurzívan összerakott típus:
+data [a] = [] | a : [a]
+Megjelenik az [a] a jobb és bal oldalon is, ezen rekurzió miatt lehetséges a végtelen lista.
+
+A típusban az is teljesen érvényes, ha a listán kívül adjuk meg a típusparamétert.
+pl.
+map :: (a -> b) -> [] a -> [] b
+és ezzel ekvivalens, mindkettő ugyanazt jelentik.
+map :: (a -> b) -> [a] -> [b]
