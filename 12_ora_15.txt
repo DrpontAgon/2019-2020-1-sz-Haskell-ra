@@ -1,0 +1,40 @@
+Saját típusok:
+Típusszinoníma a "type" kulcsszóval. Akármit el lehet nevezni akárminek. Akár típusparamétert is lehet adni, hogy polimorf típusokat is át lehessen nevezni.
+
+Saját típus létrehozása a "data" kulcsszóval. Fordítótól lehet segítséget kérni a deriving kulcsszóval, majd utána rendezett n-es stílusban felsorolni, hogy miben kérünk segítséget:
+Eq : egyenlőségvizsgálat
+Ord : kisebb, nagyobb vizsgálat
+Show : kiíratás
+Read : beolvasás
+Enum : felsorolás
+Bounded : korlátolás
+
+Típus deriválás (példányosítás) kézzel:
+
+instance Osztály Típus where
+  -- Tudni kell, hogy milyen függvényeket kell az Osztály-ban definiálni
+  -- Ezt a :i-vel lehet megkérdezni a ghci-től, :i Osztály formában.
+
+pl. :i Show
+class Show a where
+  showsPrec :: Int -> a -> ShowS
+  show :: a -> String
+  showList :: [a] -> ShowS
+  {-# MINIMAL showsPrec | show #-}
+        -- Defined in `GHC.Show'
+A {-# MINIMAL #-} részben leírja, hogy melyik függvény(ek) kötelező(k).
+Jelen esetben a Show-nak a showsPrec VAGY a show függvényt kell definiálni.
+Amik vesszővel vannak elválasztva egymástól, azok között és kapcsolat van, tehát azok mindegyikének megadása kötelező.
+
+i Num
+class Num a where
+  (+) :: a -> a -> a
+  (-) :: a -> a -> a
+  (*) :: a -> a -> a
+  negate :: a -> a
+  abs :: a -> a
+  signum :: a -> a
+  fromInteger :: Integer -> a
+  {-# MINIMAL (+), (*), abs, signum, fromInteger, (negate | (-)) #-}
+        -- Defined in `GHC.Num'
+Ahhoz, hogy valami szám legyen, kell neki kötelezően a (+),(*),abs,signum,fromInteger mindegyik és vagy a negate vagy a (-) függvény.
