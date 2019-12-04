@@ -1,13 +1,21 @@
 Saját típusok:
 Típusszinoníma a "type" kulcsszóval. Akármit el lehet nevezni akárminek. Akár típusparamétert is lehet adni, hogy polimorf típusokat is át lehessen nevezni.
 
-Saját típus létrehozása a "data" kulcsszóval. Fordítótól lehet segítséget kérni a deriving kulcsszóval, majd utána rendezett n-es stílusban felsorolni, hogy miben kérünk segítséget:
+Saját típus létrehozása a "data" kulcsszóval. 
+pl. 
+
+data IPoint = P Int Int | P' Integer Integer | P'' Float Float
+
+Fordítótól lehet segítséget kérni a deriving kulcsszóval, majd utána rendezett n-es stílusban felsorolni, hogy miben kérünk segítséget:
 Eq : egyenlőségvizsgálat
 Ord : kisebb, nagyobb vizsgálat
 Show : kiíratás
 Read : beolvasás
 Enum : felsorolás
 Bounded : korlátolás
+
+pl. 
+data IPoint = P Int Int | P' Integer Integer | P'' Float Float deriving Eq
 
 Típus deriválás (példányosítás) kézzel:
 
@@ -25,6 +33,13 @@ class Show a where
 A {-# MINIMAL #-} részben leírja, hogy melyik függvény(ek) kötelező(k).
 Jelen esetben a Show-nak a showsPrec VAGY a show függvényt kell definiálni.
 Amik vesszővel vannak elválasztva egymástól, azok között és kapcsolat van, tehát azok mindegyikének megadása kötelező.
+pl.
+
+instance Show IPoint where
+    show (P x y) = '(':show x ++ ',':show y ++ ")"
+    show (P' x y) = '(':show x ++ ',':show y ++ ")"
+    show (P'' x y) = '(':show x ++ ',':show y ++ ")"
+
 
 i Num
 class Num a where
