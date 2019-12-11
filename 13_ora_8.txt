@@ -1,0 +1,233 @@
+Egyéb hasznos formák a vizsgára:
+
+record syntax:
+data Alma = A {getA1 :: Int, getA2 :: String} | B {getB1 :: Integer, getB2 :: Char}
+Ebben az esetben az A konstruktornak két paramétere van, egy Int és egy String, B-nek egy Integer és egy Char.
+A példában így létrehoztunk továbbá 4 függvényt:
+ - getA1 :: Alma -> Int
+ - getA2 :: Alma -> String
+ - getB1 :: Alma -> Integer
+ - getB2 :: Alma -> Char
+Vigyázni kell ilyenkor azzal, hogy senki nem tudja garantálni azt, hogy jó konstruktorú érték kerüljön az adott get függvényekhez.
+Tehát getA1 kaphat (B 3 'c')-t is, ekkor nem lesz fordítási hiba, mert típushelyes, helyette el fog szállni az egész program.
+Így ez a konstrukció csak akkor biztonságos, ha pontosan egyetlen konstruktora van a típusnak.
+
+pattern guard:
+f :: (Alma, Int) -> Either Int Integer
+f (x, y)
+ | (A a _) <- x = Left a
+ | y > 10 = Left y
+ | (B a _) <- x = Right a
+Más ág nem lehetséges, nem kell otherwise. Bool kifejezéseket ugyanúgy rakhatunk közbe, ld. y > 10 sor.
+FONTOS! Vegyíteni a két kifejezést egy sorban nem szabad, fordítási hibát kapunk rá.
+hibas (x, y)
+ | ((A a _) <- x) && y > 10 {-ez nem megengedett-} = Left a
+ | (B a _) <- x = Right a
+
+case _ of:
+Sor közbeni mintaillesztés.
+Ha valami hasonlót szeretnénk elérni, mint a fenti hibás függvény, akkor segítségünkre van a case of.
+
+jo (x, y)
+ | y > 10 = case x of (A a _) -> Left a; (B a _) -> Right a
+ | (B a _) <- x = Right a
+
+Így pontosan ugyanazt fejeztük ki, mint amit fent szerettünk volna.
+A case of-ot lehet egy sorba írni, ilyenkor az ágak között ';' található.
+Ha külön sorokba írjuk, akkor ugyanúgy a megfelelő helyekre be kell húzni az ágakat. Értelemszerűen még bentebb, mint a függvény kezdete vagy az elágazás vagy a where.
+
+jo2 (x, y)
+ | y > 10 = case x of 
+    (A a _) -> Left a
+    (B a _) -> Right a
+ | (B a _) <- x = Right a
+
+Jó ez még akkor is, ha nem a konkrét értékünkre kell mintailleszteni, hanem egy függvény által visszaadott értékre.
+
+import Data.List
+g :: a -> [a] -> [a]
+g e x = case splitAt 5 x of (a,[]) -> a; (a,b) -> a ++ e : b
+
+A case of-nak az eredménye is egy kifejezés, így vegyíthető más kifejezésekkel is.
+
+import Data.List
+g :: a -> [a] -> [a]
+g e x = a ++ case b of [] -> []; _ -> e : b -- a ++-tól a sor végéig tart a case of, az egész egy kifejezés
+  where (a, b) = splitAt 5 x
+
+Emiatt az ágaknak értelemszerűen ugyanolyan típusú értékekkel kell, hogy visszatérjenek.
+
+
+View pattern:
+Ez már egzotikumnak számít, a case of függvényhívásának mintaillesztését hivatott rövidíteni.
+Ennek használatát külön pragmával a .hs fájlon belül engedélyezni kell a fájl legeslegelején, még a module deklaráció előtt a {-# LANGUAGE ViewPatterns #-} használatával!
+Ezt a módszert csak egy-egy paraméteren lehet használni, épp ezért az abban használt függvényeknek szintén egy paramétereseknek kell lenniük.
+
+{-# LANGUAGE ViewPatterns #-}
+insertAt5th :: a -> [a] -> [a]
+insertAt5th e (splitAt 5 -> (a,b)) = a ++ e : b
+Ekkor a második paramétert már mintaillesztettünk a (splitAt 5) parciálisan applikált függvény alapján.
+
+
+A zh-ban nem véletlen, hogy volt az én feladataim között (14-15 A és B csoport is) a "both" nevű függvény, nagyon jól lehet használni ebben az esetben, amikor azt szeretnénk, ha egyszerre több mintaillesztés teljesüljön.
+
+{-# LANGUAGE ViewPatterns #-}
+
+both :: a -> (a,a)
+both a = (a,a)
+
+uncurryAlma :: Alma -> Either (Int, String) (Integer, Char)
+uncurryAlma (both -> ((A _ _), both -> (getA1 -> x, getA2 -> y))) = Left (x,y)
+uncurryAlma (both -> ((B _ _), both -> (getB1 -> x, getB2 -> y))) = Right (x,y)
+
+Igaz, nem éppen a legjobb példa ennek a használata a fenti függvényben, mert az a hagyományos mintaillesztéssel sokkal rövidebben megoldható:
+uncurryAlma :: Alma -> Either (Int, String) (Integer, Char)
+uncurryAlma (A x y) = Left (x,y)
+uncurryAlma (B x y) = Right (x,y)
+
+Akár más programnyelveknek lehet, hogy csak ilyen konstrukciója van, azokban lehet hasznos.
+Illetve Haskell-ben is, egy elég nagy paraméterszámú data esetén a különböző segédfüggvényekkel össze lehet rakni egy érthetőbb és konstans hosszúságú megoldást.
+pl.
+
+{-# LANGUAGE ViewPatterns #-}
+
+both :: a -> (a,a)
+both a = (a,a)
+
+data BigData = Big {
+    get1 :: Int,
+    get2 :: Int,
+    get3 :: Int,
+    get4 :: Int,
+    get5 :: Int,
+    get6 :: Int,
+    get7 :: Int,
+    get8 :: Int,
+    get9 :: Int,
+    get10 :: Int,
+    get11 :: Int,
+    get12 :: Int,
+    get13 :: Int,
+    get14 :: Int,
+    get15 :: Int,
+    get16 :: Int,
+    get17 :: Int,
+    get18 :: Int,
+    get19 :: Int,
+    get20 :: Int,
+    get21 :: Int,
+    get22 :: Int,
+    get23 :: Int }
+    | Small {getSmall1 :: Integer, getSmall2 :: Integer}
+
+isBig :: BigData -> Bool
+isBig (Big _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _) = True -- itt sajnos egyszer akkor is végig számolnunk jól a 23 elemet vagy amennyit éppen kell.
+isBig _                                                   = False -- de ez tutira akárhány konstruktor esetén működik.
+-- ha pont csak kettő van és a másik jóval kisebb, akkor azt lehet mintailleszteni és False-t visszaadni rá.
+
+-- Kell nekünk a nagy adatból a 12. és a 19. elem, de nem biztos, hogy nagyot kapunk
+
+get12_19 (Big _ _ _ _ _ _ _ _ _ _ _ x _ _ _ _ _ _ y _ _ _ _) = Just (x,y)
+get12_19 _                                                   = Nothing
+
+-- Na ezt egy halál végigszámolni egyesével, hogy pont annyi legyen, amennyi kell. Ha 22 vagy 24 van, akkor fordítási hiba, nem jó a mintaillesztés.
+-- Ha nem a 12. és a 19. helyeken vannak, akkor nem az elvárt eredményt kapjuk.
+-- Egy pár segédfüggvénnyel (both és isBig) leegyszerűsíthetjük az életünket.
+
+get12_19' (both -> ((isBig -> True), both -> (get12 -> x, get19 -> y))) = Just (x,y)
+get12_19' _                                                             = Nothing
+
+-- Szemmel láthatóan a kód maga hosszabb, de nem kellett szenvedni azzal, hogy szépen egyesével leszámoljuk az elemeket.
+-- Lustaság miatt a sorrend fontos, előbb kell megnézni, hogy Big-e, különben a get12 és get19 exception-öket dobnak, ha Small érkezik.
+-- Futási költségben közel azonos időt lehet mérni.
+
+Léteznek másfajta konstrukciók is, pl. az ún. n+k pattern.
+
+import Data.List
+-- a pp függvény (++) szerű akar lenni.
+-- Ugye a (++)-ra nem lehet mintailleszteni, mert az egy általános függvény, nem konstruktor.
+pp :: Eq a => [a] -> [a] -> Maybe ([a], [a])
+pp x y
+ | Just z <- stripPrefix x y = Just (x, z)
+ | otherwise                 = Nothing
+
+start :: String -> String
+start (pp "szilva" -> Just (x,y)) = x ++ " alma " ++ y
+start _                           = "Nincs szilva."
+
+-- Ha a String "szilva"-val kezdődik, akkor be tudunk szúrni utána egy "alma" szót a szövegbe, ebből látható, hogy fel tudtunk bontani egy String-et az elejére és a maradék részére,
+-- mintaillesztettünk a (++)-ra.
+-- Mintha ezt írtuk volna:
+-- start :: String -> String
+-- start ("szilva" ++ y) = "szilva" ++ " alma " ++ y
+-- start _               = "Nincs szilva."
+-- Ez nyilván szabálytalan, de fenti teljesen szabályos.
+
+
+Még egy további hasznos LANGUAGE pragma, ez a ParallelListComp, párhuzamos listagenerátor, {-# LANGUAGE ParallelListComp #-}.
+Ezzel lehet olyan listagenerátort készíteni, ami a kapott elemeken párhuzamosan megy végig.
+
+{-# LANGUAGE ParallelListComp #-}
+
+list :: Num a => a
+list = [2*x+y | x <- [1..5] | y <- [10..20]]
+
+Ha ezt a listát kiíratjuk, a következő lesz az eredmény:
+[12,15,18,21,24]
+
+Tehát a rövidebb lista hosszáig megy, nem párosít össze mindent mindennel.
+[2*x+y | x <- [1..5] | y <- [10..20]] -- A két listákat is '|' karakterrel választottuk el egymástól, innen fogja tudni azt, hogy azokon párhuzamosan kell haladni.
+Ez pont és teljesen ugyanaz, mint a:
+zipWith (\x y -> 2*x+y) [1..5] [10..20]
+
+A két listagenerátort lehet keverni, ahogy tetszik. pl:
+[a*c + b*d | a <- [1..3], b <- [3..6] | c <- [0..4], d <- [10,20]] == [30,80,51,121,34,84,56,126,42,92]
+
+Ebben az esetben az a és b, illetve a c és d-re igaz lesz, hogy egymás közt mindenki mindenkivel együtt lesz, míg a-b és c-d között párhuzamosan haladnak végig az elemeken.
+Az alábbi módon elképzelhető, hogy mi történik:
+[a*c + b*d | (a,b) <- [(1,3),(1,4),(1,5),(1,6),(2,3),(2,4),(2,5),(2,6),(3,3),(3,4),(3,5),(3,6)] | (c,d) <- [(0,10),(0,20),(1,10),(1,20),(2,10),(2,20),(3,10),(3,20),(4,10),(4,20)]]
+Ezeken meg már párhuzamosan megy végig a köztük lévő '|' miatt.
+Ugyanezt meg lehet oldani ugyanúgy zipWith-del.
+
+A különböző LANGUAGE pragmákat, akár írhatjuk egybe: {-# LANGUAGE ParallelListComp, ViewPatterns #-}
+Akár külön sorokba:
+{-# LANGUAGE ParallelListComp #-}
+{-# LANGUAGE ViewPatterns #-}
+Ilyenkor mindegyikre külön-külön kell a LANGUAGE pragma.
+____________________________________________________________________________________________________
+Összes függvény, amiket tanultunk: (+ még egy pár, amiket nem, de ki lehet találni, hogy mit csinálnak)
+http://lambda.inf.elte.hu/TypeIndex.xml
+
+Néhány függvény magyarázata:
+
+filter : elemek kiválogatása egy adott tulajdonság alapján.
+map : lista minden elemére alkalmazunk egy függvényt.
+foldr, foldl : Hajtogatás; listányi értékből generálunk egy visszatérési értéket.
+scanr, scanl (nem tanultuk) : Hajtogatás a részeredmények feltüntetésével. (Nyilván másra is lehet használni, ld. legalul, Lucas-sorozatban)
+pl. scanl (+) 0 [1,2,9,10] == [0,1,3,12,22]
+         0
+ 0+1  == 1
+ 1+2  == 3
+ 3+9  == 12
+12+10 == 22
+
+Data.Function függvények:
+
+on :: (b -> b -> c) -> (a -> b) -> a -> a -> c
+4 paramétert vár, egy kétparaméteres függvényt, egy egyparaméteres függvényt és két paramétert. Alkalmazza az egyparaméteres függvényt a kapott két paraméterre, majd azok eredményén alkalmazza a kétparaméteres függvényt.
+pl. on (+) head [1..] [2..] == 3
+Angolosabb leírása: ((+) `on` head) [1..] [2..] == 3
+Jelentése: head [1..] + head [2..] == 3
+
+fix :: (a -> a) -> a; fixpont függvény, megadja azt az értéket, amelyre a paraméterül kapott függvény értéke nem fog változni.
+pl. fix (1 :) === [1,1..], mert ha a végtelen 1-est tartalmazó listának az elejére hozzáteszek még egy 1-est, attól az ugyanúgy végtelen darab 1-es marad.
+
+A fix függvény csak is kizárólag a rekurzív hívásokat dugja el a programozó elől.
+fix f = x where x = f x
+fix' f = f (fix' f) 
+
+Mindkét definíció ugyanazt jelenti, ám az első megközelítőleg 5-ször gyorsabb, mint a vesszős változat.
+
+Még rövidebb megoldás a Lucas-sorozatra:
+lucas = fix ((2:) . scanl (+) 1)
+Ennél tovább ezt már nem lehet egyszerűsíteni.
